@@ -1,23 +1,10 @@
 <div class="flex justify-center py-2 shadow-md">
-  <h1 class="">{{title}}</h1>
-</div>
-<div class="flex justify-center my-5 gap-4">
-  <input class="w-1/2 px-3 focus:outline-none focus:border-red-800 rounded-2xl border-2 hover:border-red-800" type="search" placeholder="Название кинотеатра" aria-label="Search">
-  <button class="p-1.5 px-3 rounded-2xl border-2 hover:border-red-800 " type="submit">Поиск</button>
-</div>
-<div class="max-w-6xl container mx-auto">
-  <div class="grid grid-cols-3 gap-6">
-    <!--<app-product *ngFor="let product of products" [product]="product" />-->
-    <div class="cursor-pointer group p-4 flex items-center flex-col h-60 justify-center relative hover:scale-105 rounded-2xl shadow-lg hover:border-red-800 border-2">
-      <p class="z-10">Мини описание</p>
-      <h2 class="text-xl z-10 mb-4"><strong>40₽</strong></h2>
-    </div>
-
+  <div class="flex items-center">
+    <h1 routerLink="/films" class="cursor-default text-2xl">Все фильмы</h1>
+  </div>
+  <div class="flex">
+    <h1 class="cursor-default" routerLink="/">{{title}}</h1>
   </div>
 </div>
-<!--<nav>
-  <a routerLink="/dashboard">Dashboard</a>
-  <a routerLink="/heroes">Heroes</a>
-</nav>-->
 <router-outlet></router-outlet>
 

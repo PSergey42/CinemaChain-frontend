@@ -1,0 +1,9 @@
+<div class="flex justify-center my-5 gap-4">
+  <input class="w-1/2 px-3 focus:outline-none focus:border-red-800 rounded-2xl border-2 hover:border-red-800" type="search" placeholder="Название кинотеатра" aria-label="Search">
+  <button class="p-1.5 px-3 rounded-2xl border-2 hover:border-red-800 " type="submit">Поиск</button>
+</div>
+<div class="max-w-6xl container mx-auto">
+  <div class="grid grid-cols-3 gap-6">
+    <app-cinema *ngFor="let cinema of cinemas" [cinema]="cinema"/>
+  </div>
+</div>

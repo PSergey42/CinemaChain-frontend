@@ -1,0 +1,18 @@
+<div class="mt-10 flex flex-col items-center">
+  <h2 class="text-7xl mb-4 font-bold">{{film?.name}}</h2>
+  <div class="mt-10 flex gap-20 w-[40rem]">
+    <div class="ml-10">
+      <p>Дата выхода: {{film?.dateExits?.getDate() + "." + film?.dateExits?.getMonth() + "." + film?.dateExits?.getFullYear()}}</p>
+      <p>Бюджет: {{film?.budget}}$</p>
+      <div class="flex">
+        <p>Жанры:</p>
+        <app-genre *ngFor="let genre of film?.genres" [genre]="genre"/>
+      </div>
+    </div>
+    <div class="flex flex-col items-center justify-center w-[20rem]">
+      <p>Актеры:</p>
+      <app-actor *ngFor="let actor of film?.actors" [actor]="actor"/>
+    </div>
+  </div>
+</div>
+
