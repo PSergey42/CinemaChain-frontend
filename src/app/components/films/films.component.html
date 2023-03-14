@@ -2,13 +2,24 @@
   <input class="w-1/3 px-3 focus:outline-none focus:border-red-800 rounded-2xl border-2 hover:border-red-800" type="search" placeholder="Название фильма" aria-label="Search">
   <button class="p-1.5 px-3 rounded-2xl border-2 hover:border-red-800 " type="submit">Поиск</button>
 </div>
-<div class="max-w-6xl container mx-auto mt-6">
-  <div class="grid grid-cols-4 gap-6">
-    <div *ngFor="let film of films">
-      <div routerLink="/film/{{film?.id}}" class="cursor-pointer p-4 flex items-center flex-col h-60 justify-center relative hover:scale-105 rounded-2xl shadow-lg hover:border-red-800 border-2">
-        <p class="text-xl z-10"><strong>{{film?.name}}</strong></p>
-        <h2 class="z-10 mb-4">{{film?.budget}}$</h2>
+<div class="flex container max-w-[108rem] mx-auto">
+  <app-sorting/>
+  <div class="max-w-6xl container mx-auto ml-[28rem] mt-6">
+    <div class="grid grid-cols-4 gap-6">
+      <div *ngFor="let film of films">
+        <div routerLink="/film/{{film?.id}}" class="cursor-pointer p-4 flex items-center flex-col h-60 justify-center relative hover:scale-105 rounded-2xl shadow-lg hover:border-red-800 border-2">
+          <p class="text-xl z-10"><strong>{{film?.name}}</strong></p>
+          <h2 class="z-10 mb-4">{{film?.budget}}$</h2>
+        </div>
+      </div>
+      <div class="cursor-pointer p-4 flex items-center flex-col h-60 justify-center relative hover:scale-105 rounded-2xl shadow-lg hover:border-red-800 border-2 border-dashed">
+        <h1 class="font-bold text-9xl underline-offset-0 text-gray-300 text-clip ">+</h1>
+        <h1 class="font-bold text-xl text-gray-300 text-clip ">Добавить</h1>
       </div>
     </div>
   </div>
+  <div>
+    <!--тут добавление-->
+  </div>
 </div>
+

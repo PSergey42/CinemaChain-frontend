@@ -4,4 +4,8 @@
 </div>
 <div class="max-w-6xl mx-auto flex flex-col gap-6">
     <app-film-schedule *ngFor="let schedule of schedules" [schedule]="schedule"/>
+    <div class="cursor-pointer flex flex-col items-center px-16 p-4 flex min-h-[10rem] justify-center relative hover:scale-105 rounded-2xl shadow-lg hover:border-red-800 border-2 border-dashed">
+    <h1 class="font-bold text-8xl underline-offset-0 text-gray-300 text-clip ">+</h1>
+    <h1 class="font-bold text-xl text-gray-300 text-clip ">Добавить</h1>
+  </div>
 </div>

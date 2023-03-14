@@ -12,6 +12,7 @@ import { SessionComponent } from './components/session/session.component';
 import {FilmScheduleComponent} from "./components/film-schedule/film-schedule.component";
 import { GenreComponent } from './components/genre/genre.component';
 import { FilmsComponent } from './components/films/films.component';
+import { SortingComponent } from './components/sorting/sorting.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { FilmsComponent } from './components/films/films.component';
     SessionComponent,
     FilmScheduleComponent,
     GenreComponent,
-    FilmsComponent
+    FilmsComponent,
+    SortingComponent
   ],
   imports: [
     BrowserModule,
