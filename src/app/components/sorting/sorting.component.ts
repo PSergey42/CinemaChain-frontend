@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {Actor} from "../../models/actor";
+import {Genre} from "../../models/genre";
 
 @Component({
   selector: 'app-sorting',
@@ -6,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./sorting.component.css']
 })
 export class SortingComponent {
-
+  @Input() actors?: Actor[]
+  @Input() genres?: Genre[]
 }

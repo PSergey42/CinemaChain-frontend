@@ -10,4 +10,6 @@ import {Film} from "../../models/film";
 export class FilmScheduleComponent {
   @Input() schedule?: Schedule;
   film?: Film = {id: "33", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []}; //из запроса по filmId
+
+
 }

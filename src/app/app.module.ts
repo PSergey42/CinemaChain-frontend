@@ -13,6 +13,9 @@ import {FilmScheduleComponent} from "./components/film-schedule/film-schedule.co
 import { GenreComponent } from './components/genre/genre.component';
 import { FilmsComponent } from './components/films/films.component';
 import { SortingComponent } from './components/sorting/sorting.component';
+import { AddCinemaComponent } from './components/modal/add-cinema/add-cinema.component';
+import { AddFilmComponent } from './components/modal/add-film/add-film.component';
+import { AddFilmScheduleComponent } from './components/modal/add-film-schedule/add-film-schedule.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,10 @@ import { SortingComponent } from './components/sorting/sorting.component';
     FilmScheduleComponent,
     GenreComponent,
     FilmsComponent,
-    SortingComponent
+    SortingComponent,
+    AddCinemaComponent,
+    AddFilmComponent,
+    AddFilmScheduleComponent
   ],
   imports: [
     BrowserModule,

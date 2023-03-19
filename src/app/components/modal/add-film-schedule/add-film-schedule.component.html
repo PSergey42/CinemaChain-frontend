@@ -1,0 +1,64 @@
+<div *ngIf="showModal"  tabindex="-1" aria-hidden="true" class="fixed justify-center items-center flex z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
+  <div class="relative w-full h-full max-w-[34rem] md:h-auto">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          Добавление фильма в расписание кинотеатра
+        </h3>
+        <button type="button" (click)="setShowModal(!showModal)" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+          <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="p-6 space-y-6 select-none">
+        <div class="flex justify-center gap-2">
+          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Дата показа:</label>
+          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{today}}</label>
+        </div>
+        <div class="flex justify-between">
+          <div>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Доступные фильмы</label>
+            <div class="max-h-48 w-[220px] overflow-y-auto bg-gray-50 border border-gray-300 rounded-lg">
+              <div class="my-[6px] gap-2 flex items-center text-gray-900 text-sm mx-[12px] " *ngFor="let film of films">
+                <input type="checkbox" class="w-[1rem] h-[1rem] text-blue-600">
+                {{film.name}}
+              </div>
+            </div>
+          </div>
+          <div>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Время показа</label>
+            <div class="h-48 w-[240px] overflow-y-auto bg-gray-50 border border-gray-300 rounded-lg">
+              <div class="mt-3 mx-[24px] flex-grow">
+                <div class="border-2 w-[12rem] h-[4rem] bg-gray-50 hover:scale-105 hover:border-red-800 border-2 rounded-lg flex flex-col justify-center">
+                  <div class="flex justify-between px-[0.3rem]">
+                    <label class="block flex items-center text-[0.75rem] font-medium text-gray-900 dark:text-white">Время:</label>
+                    <input type="time" class="text-[0.75rem] p-1 bg-transparent outline-0">
+                    <!--<label class="block text-[0.75rem] font-medium text-gray-900 dark:text-white">{{'14:00'}}</label>-->
+                  </div>
+                  <div class="flex justify-between px-[0.3rem]">
+                    <label class="block flex items-center text-[0.75rem] font-medium text-gray-900 dark:text-white">Свободно:</label>
+                    <input type="number" class="w-[70px] text-[0.75rem] bg-gray-300 rounded-lg  p-1 outline-0">
+                  </div>
+                </div>
+                <button type="button" class="cursor-pointer flex items-center w-[12rem] h-[4rem] justify-center relative hover:scale-105 rounded-lg hover:border-red-800 border-2 border-dashed">
+                  <h1 class="font-bold text-2xl underline-offset-0 text-gray-300 text-clip ">+</h1>
+                </button>
+                <!--<app-session *ngFor="let session of schedule?.sessions" [session]="session"/>-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal footer -->
+      <div class="flex  justify-around items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+        <button (click)="setShowModal(!showModal)" type="button" class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+          Добавить
+        </button>
+        <button (click)="setShowModal(!showModal)" type="button" class="text-gray-500 bg-white hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-500 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Отменить</button>
+      </div>
+    </div>
+  </div>
+</div>
