@@ -1,6 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {ShowModalService} from "../../../service/show-modal.service";
 import {Film} from "../../../models/film";
+import {Session} from "../../../models/session";
 
 @Component({
   selector: 'app-add-film-schedule',
@@ -11,11 +12,13 @@ export class AddFilmScheduleComponent implements OnInit{
 
   @Input() today?: string;
 
-  films?: Film[] = [{id: "33", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []},
+  films: Film[] = [{id: "31", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []},
+    {id: "32", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []},
     {id: "33", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []},
-    {id: "33", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []},
-    {id: "33", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []},
-    {id: "33", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []}]
+    {id: "34", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []},
+    {id: "35", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []}]
+
+  schedule: Session[] = [];
   showModal?: boolean;
   constructor(
     private readonly showModalService: ShowModalService
@@ -26,6 +29,39 @@ export class AddFilmScheduleComponent implements OnInit{
   }
 
   public setShowModal(showModal: boolean): void {
-    this.showModalService.setShowModal(showModal);
+    if(!this.isCheckbox){
+      this.schedule = [];
+      this.showModalService.setShowModal(showModal);
+    }
+  }
+
+  addSessionFilm() {
+    this.schedule?.push({showDate: new Date(this.today as string), showTime: undefined, hall: undefined, numberSeats: undefined})
+  }
+
+  checkSessions(): boolean {
+    for(let s of this.schedule){
+      if(!(s.hall && s.numberSeats && s.showTime)) {
+        document?.getElementById("add")?.setAttribute("disabled", "disabled");
+        return true;
+      }
+
+    }
+    document?.getElementById("add")?.removeAttribute("disabled");
+    return true;
+  }
+  isCheckbox = false;
+  selectedFilm(id: string) {
+    if(!this.isCheckbox){
+      for (let f of this.films){
+        if(f.id != id) document?.getElementById(f.id)?.setAttribute("disabled", "disabled");
+      }
+      this.isCheckbox = true;
+    } else {
+      for (let f of this.films){
+        document?.getElementById(f.id)?.removeAttribute("disabled");
+      }
+      this.isCheckbox = false;
+    }
   }
 }
