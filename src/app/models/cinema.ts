@@ -1,5 +1,5 @@
 export interface Cinema{
-  id: string,
-  address: string,
-  name: string
+  id?: string,
+  address?: string,
+  name?: string
 }

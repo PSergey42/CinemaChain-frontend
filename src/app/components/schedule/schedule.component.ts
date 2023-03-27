@@ -28,8 +28,8 @@ export class ScheduleComponent implements OnInit{
   constructor(private route: ActivatedRoute,
     private readonly showModalService: ShowModalService
   ) {
-    this.date = new Date('2001.09.24')
-    route.params.subscribe(params => this.getListFilmByDate(params['id'], this.date.toISOString().split('T')[0])); // schedules = this.get.....
+    this.date = new Date('2001-09-23')
+    route.params.subscribe(params => this.getListFilmByDate(params['id'], this.parseDate(this.date.toLocaleDateString()))) // schedules = this.get.....
   }
 
   public setShowModal(showModal: boolean): void {
@@ -40,12 +40,15 @@ export class ScheduleComponent implements OnInit{
   today?: string;
 
   ngOnInit() {
-    this.today = this.date?.toISOString().split('T')[0];
+    this.today = this.parseDate(this.date.toLocaleDateString());
   }
 
+  parseDate(s: string): string{
+    return s.replaceAll(".", "-").split('-').reverse().join("-")
+  }
 
   getListFilmByDate(cinema_id: string, date: string): void{
-    this.date = new Date(date);
+    /*this.date = new Date(date);*/
     //запрос в бд по дате и айди кинотеатра
   }
 

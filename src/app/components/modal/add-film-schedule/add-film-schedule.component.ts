@@ -20,6 +20,7 @@ export class AddFilmScheduleComponent implements OnInit{
 
   schedule: Session[] = [];
   showModal?: boolean;
+
   constructor(
     private readonly showModalService: ShowModalService
   ) {}
@@ -29,10 +30,9 @@ export class AddFilmScheduleComponent implements OnInit{
   }
 
   public setShowModal(showModal: boolean): void {
-    if(!this.isCheckbox){
+      this.selectedFilm("");
       this.schedule = [];
       this.showModalService.setShowModal(showModal);
-    }
   }
 
   addSessionFilm() {

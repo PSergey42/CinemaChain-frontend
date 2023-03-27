@@ -6,10 +6,11 @@
   <input type="date" [value]="today" [(ngModel)]="today" class="w-[220px] h-[42px] border-2 hover:border-red-800 text-gray-900 focus:outline-none focus:border-red-800 text-sm rounded-lg p-2.5" required>
 </div>
 <div class="max-w-6xl mx-auto flex flex-col gap-6">
-    <app-film-schedule *ngFor="let schedule of schedules" [schedule]="schedule"/>
+    <app-film-schedule *ngFor="let schedule of schedules" [schedule]="schedule" [today]="today"/>
     <button type="button" (click)="setShowModal(!showModal)" class="cursor-pointer flex flex-col items-center px-16 p-4 flex min-h-[10rem] justify-center relative hover:scale-105 rounded-2xl shadow-lg hover:border-red-800 border-2 border-dashed">
     <h1 class="font-bold text-8xl underline-offset-0 text-gray-300 text-clip ">+</h1>
     <h1 class="font-bold text-xl text-gray-300 text-clip ">Добавить</h1>
   </button>
 </div>
 <app-add-film-schedule [today]="today"/>
+<app-edit-film-schedule [today]="today"/>

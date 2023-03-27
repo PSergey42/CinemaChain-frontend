@@ -1,0 +1,14 @@
+<div class="border-2 w-[10rem] h-[6rem] bg-gray-50 hover:scale-105 hover:border-red-800 border-2 rounded-lg flex flex-col justify-center">
+  <div class="flex justify-between px-[0.3rem]">
+    <label class="block flex items-center text-[0.75rem] font-medium text-gray-900 dark:text-white">Время:</label>
+    <input type="time" [value]="time" [(ngModel)]="time" class="text-[0.75rem] p-1 bg-transparent outline-0">
+  </div>
+  <div class="flex justify-between px-[0.3rem] mb-2">
+    <label class="block flex items-center text-[0.75rem] font-medium text-gray-900 dark:text-white">Свободно:</label>
+    <input type="number" [(ngModel)]="session.numberSeats" class="w-[70px] text-[0.75rem] bg-gray-300 rounded-lg  p-1 outline-0">
+  </div>
+  <div class="flex justify-between px-[0.3rem]">
+    <label class="block flex items-center text-[0.75rem] font-medium text-gray-900 dark:text-white">Зал:</label>
+    <input type="number" [(ngModel)]="session.hall" class="w-[70px] text-[0.75rem] bg-gray-300 rounded-lg  p-1 outline-0">
+  </div>
+</div>

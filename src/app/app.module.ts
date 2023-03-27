@@ -16,6 +16,10 @@ import { SortingComponent } from './components/sorting/sorting.component';
 import { AddCinemaComponent } from './components/modal/add-cinema/add-cinema.component';
 import { AddFilmComponent } from './components/modal/add-film/add-film.component';
 import { AddFilmScheduleComponent } from './components/modal/add-film-schedule/add-film-schedule.component';
+import { EditFilmScheduleComponent } from './components/modal/edit-film-schedule/edit-film-schedule.component';
+import { EditSessionComponent } from './components/modal/edit-film-schedule/edit-session/edit-session.component';
+import { EditCinemaComponent } from './components/modal/edit-cinema/edit-cinema.component';
+import { ActorsAndGenresComponent } from './components/actors-and-genres/actors-and-genres.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +36,11 @@ import { AddFilmScheduleComponent } from './components/modal/add-film-schedule/a
     SortingComponent,
     AddCinemaComponent,
     AddFilmComponent,
-    AddFilmScheduleComponent
+    AddFilmScheduleComponent,
+    EditFilmScheduleComponent,
+    EditSessionComponent,
+    EditCinemaComponent,
+    ActorsAndGenresComponent
   ],
   imports: [
     BrowserModule,
