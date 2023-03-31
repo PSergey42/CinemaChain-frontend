@@ -34,7 +34,7 @@
             <div class="max-h-48 w-[220px] overflow-y-auto bg-gray-50 border border-gray-300 rounded-lg">
               <div class="my-[6px] gap-2 flex items-center text-gray-900 text-sm mx-[12px] " *ngFor="let actor of actors">
                 <input type="checkbox" class="w-[1rem] h-[1rem] text-blue-600">
-                <app-actor [actor]="actor"/>
+                {{actor.fio}}
               </div>
             </div>
           </div>
@@ -43,7 +43,7 @@
             <div class="max-h-48 w-[220px] overflow-y-auto bg-gray-50 border border-gray-300 rounded-lg">
             <div class="my-[6px] gap-2 flex items-center mx-[12px]" *ngFor="let genre of genres">
               <input type="checkbox" class="w-[1rem] h-[1rem] text-blue-600">
-              <app-genre [genre]="genre"/>
+              {{genre.name}}
             </div>
           </div>
         </div>

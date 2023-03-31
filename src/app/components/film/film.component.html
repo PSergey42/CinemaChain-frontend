@@ -1,17 +1,30 @@
 <div class="mt-10 flex flex-col items-center">
-  <h2 class="text-7xl mb-4 font-bold">{{film?.name}}</h2>
-  <div class="mt-10 flex gap-20 w-[40rem]">
-    <div class="ml-10">
-      <p>Дата выхода: {{film?.dateExits?.getDate() + "." + film?.dateExits?.getMonth() + "." + film?.dateExits?.getFullYear()}}</p>
-      <p>Бюджет: {{film?.budget}}$</p>
-      <div class="flex">
-        <p>Жанры:</p>
-        <app-genre *ngFor="let genre of film?.genres" [genre]="genre"/>
+  <div class="flex">
+    <h2 class="text-7xl mb-4 font-bold">{{film?.name}}</h2>
+    <button type="button"  class="ml-4 mt-4 bottom-1 text-lg text-red-400 font-semibold hover:scale-105 ">
+      Редактировать
+    </button>
+  </div>
+  <div class="flex mt-10 justify-around w-full">
+    <div class="ml-[10rem]">
+      <label class="block mb-2 text-xl font-medium text-gray-900 dark:text-white flex justify-center">Жанры</label>
+      <div class="h-[30rem] w-[440px] overflow-y-auto bg-gray-50 border border-gray-300 rounded-lg">
+        <div class="grid grid-cols-2 gap-3">
+          <app-genre-in-film *ngFor="let genre of film?.genres" [genre]="genre"/>
+        </div>
       </div>
     </div>
-    <div class="flex flex-col items-center justify-center w-[20rem]">
-      <p>Актеры:</p>
-      <app-actor *ngFor="let actor of film?.actors" [actor]="actor"/>
+    <div class="mt-10">
+      <p class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Дата выхода: {{film.dateExits.toLocaleDateString()}}</p>
+      <p class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Бюджет: {{film?.budget}}$</p>
+    </div>
+    <div class="mr-[10rem]">
+      <label class="block mb-2 text-xl font-medium text-gray-900 dark:text-white flex justify-center">Актеры</label>
+      <div class="">
+        <div class="h-[30rem] w-[440px] overflow-y-auto bg-gray-50 border border-gray-300 rounded-lg">
+          <app-actor-in-film *ngFor="let actor of film?.actors" [actor]="actor"/>
+        </div>
+      </div>
     </div>
   </div>
 </div>

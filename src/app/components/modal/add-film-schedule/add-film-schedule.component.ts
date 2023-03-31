@@ -36,17 +36,23 @@ export class AddFilmScheduleComponent implements OnInit{
   }
 
   addSessionFilm() {
-    this.schedule?.push({showDate: new Date(this.today as string), showTime: undefined, hall: undefined, numberSeats: undefined})
+    if(this.isCheckbox){
+      this.schedule?.push({showDate: new Date(this.today as string), showTime: undefined, hall: undefined, numberSeats: undefined})
+    }
   }
 
   checkSessions(): boolean {
-    for(let s of this.schedule){
-      if(!(s.hall && s.numberSeats && s.showTime)) {
-        document?.getElementById("add")?.setAttribute("disabled", "disabled");
-        return true;
-      }
-
+    if(this.schedule.length == 0){
+      document?.getElementById("add")?.setAttribute("disabled", "disabled");
+      return true;
     }
+    for(let s of this.schedule){
+        if(!(s.hall && s.numberSeats && s.showTime)) {
+          document?.getElementById("add")?.setAttribute("disabled", "disabled");
+          return true;
+        }
+    }
+
     document?.getElementById("add")?.removeAttribute("disabled");
     return true;
   }

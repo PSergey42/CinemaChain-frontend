@@ -1,10 +1,10 @@
 <div class="flex justify-evenly mt-12">
   <div>
     <label class="block mb-2 text-xl font-medium text-gray-900 dark:text-white flex justify-center">Жанры</label>
-    <div class="h-[30rem] w-[400px] overflow-y-auto bg-gray-50 border border-gray-300 rounded-lg">
-      <div class="grid grid-cols-2 gap-4">
+    <div class="h-[30rem] w-[440px] overflow-y-auto bg-gray-50 border border-gray-300 rounded-lg">
+      <div class="grid grid-cols-2 gap-3">
         <app-genre *ngFor="let genre of genres" [genre]="genre"/>
-        <button type="button" class="mx-auto mt-4 cursor-pointer flex items-center flex-col h-[5rem] w-[10rem] justify-center relative hover:scale-105 rounded-2xl hover:border-red-800 border-2 border-dashed">
+        <button type="button" (click)="addGenre()" class="mx-auto mt-4 cursor-pointer flex items-center flex-col h-[5rem] w-[12rem] justify-center relative hover:scale-105 rounded-2xl hover:border-red-800 border-2 border-dashed">
           <h1 class="font-bold text-[4rem] underline-offset-0 text-gray-300 text-clip ">+</h1>
         </button>
       </div>
@@ -13,9 +13,9 @@
   <div>
     <label class="block mb-2 text-xl font-medium text-gray-900 dark:text-white flex justify-center">Актеры</label>
     <div class="">
-      <div class="h-[30rem] w-[400px] overflow-y-auto bg-gray-50 border border-gray-300 rounded-lg">
+      <div class="h-[30rem] w-[440px] overflow-y-auto bg-gray-50 border border-gray-300 rounded-lg">
         <app-actor *ngFor="let actor of actors" [actor]="actor"/>
-        <button type="button" class="mx-auto my-4 cursor-pointer flex items-center flex-col h-[5rem] w-[20rem] justify-center relative hover:scale-105 rounded-2xl hover:border-red-800 border-2 border-dashed">
+        <button type="button" (click)="addActor()" class="mx-auto my-4 cursor-pointer flex items-center flex-col h-[5rem] w-[22rem] justify-center relative hover:scale-105 rounded-2xl hover:border-red-800 border-2 border-dashed">
           <h1 class="font-bold text-[4rem] underline-offset-0 text-gray-300 text-clip ">+</h1>
         </button>
       </div>

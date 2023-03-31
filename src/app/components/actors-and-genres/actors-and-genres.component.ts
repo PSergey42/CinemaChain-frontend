@@ -8,6 +8,16 @@ import {Genre} from "../../models/genre";
   styleUrls: ['./actors-and-genres.component.css']
 })
 export class ActorsAndGenresComponent {
-  actors?: Actor[] = [{id: "", fio: "1"}, {id: "", fio: "1"}, {id: "", fio: "1"}]
-  genres?: Genre[] = [{id: "", name: "1"}, {id: "", name: "1"}, {id: "", name: "1"}]
+  actors: Actor[] = [{id: "1", fio: "1"}, {id: "2", fio: "1"}, {id: "3", fio: "1"}]
+  genres: Genre[] = [{id: "1", name: "1"}, {id: "2", name: "1"}, {id: "3", name: "1"}]
+
+  addActor(){
+    this.actors.push({id: "", fio: ""});
+  }
+
+  addGenre(){
+    this.genres.push({id: "", name: ""});
+  }
 }
+
+

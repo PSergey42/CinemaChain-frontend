@@ -9,4 +9,6 @@ import {Session} from "../../models/session";
 export class SessionComponent {
   @Input() session?: Session;
 
+  isOpen: boolean = false;
+
 }

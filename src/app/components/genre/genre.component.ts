@@ -7,5 +7,25 @@ import {Genre} from "../../models/genre";
   styleUrls: ['./genre.component.css']
 })
 export class GenreComponent {
-  @Input() genre?: Genre
+  @Input() genre: Genre = {id: "", name: ""}
+
+  isEdit: boolean = false;
+
+  ngOnInit(){
+    if(!(this.genre.id && this.genre.name)){
+      this.isEdit = true;
+    }
+  }
+
+  onEdit(){
+    this.isEdit = true;
+  }
+  delGenre(){
+
+  }
+  updateGenre(){
+    if(this.genre.name){
+      this.isEdit = false;
+    }
+  }
 }

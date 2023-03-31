@@ -20,6 +20,8 @@ import { EditFilmScheduleComponent } from './components/modal/edit-film-schedule
 import { EditSessionComponent } from './components/modal/edit-film-schedule/edit-session/edit-session.component';
 import { EditCinemaComponent } from './components/modal/edit-cinema/edit-cinema.component';
 import { ActorsAndGenresComponent } from './components/actors-and-genres/actors-and-genres.component';
+import { ActorInFilmComponent } from './components/film/actor-in-film/actor-in-film.component';
+import { GenreInFilmComponent } from './components/film/genre-in-film/genre-in-film.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { ActorsAndGenresComponent } from './components/actors-and-genres/actors-
     EditFilmScheduleComponent,
     EditSessionComponent,
     EditCinemaComponent,
-    ActorsAndGenresComponent
+    ActorsAndGenresComponent,
+    ActorInFilmComponent,
+    GenreInFilmComponent
   ],
   imports: [
     BrowserModule,
