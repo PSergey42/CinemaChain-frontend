@@ -9,7 +9,4 @@ import {Actor} from "../../../models/actor";
 export class ActorInFilmComponent {
   @Input() actor: Actor = {id: "", fio: ""}
 
-  delGenre() {
-
-  }
 }

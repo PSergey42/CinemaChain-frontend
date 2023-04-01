@@ -22,6 +22,7 @@ import { EditCinemaComponent } from './components/modal/edit-cinema/edit-cinema.
 import { ActorsAndGenresComponent } from './components/actors-and-genres/actors-and-genres.component';
 import { ActorInFilmComponent } from './components/film/actor-in-film/actor-in-film.component';
 import { GenreInFilmComponent } from './components/film/genre-in-film/genre-in-film.component';
+import { EditFilmComponent } from './components/modal/edit-film/edit-film.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { GenreInFilmComponent } from './components/film/genre-in-film/genre-in-f
     EditCinemaComponent,
     ActorsAndGenresComponent,
     ActorInFilmComponent,
-    GenreInFilmComponent
+    GenreInFilmComponent,
+    EditFilmComponent
   ],
   imports: [
     BrowserModule,

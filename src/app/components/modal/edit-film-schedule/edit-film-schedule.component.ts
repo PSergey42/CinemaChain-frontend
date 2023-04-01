@@ -11,16 +11,35 @@ import {EditModalService} from "../../../service/edit-modal.service";
 })
 //TODO добавить возможность редактировать дату
 export class EditFilmScheduleComponent{
-  schedule?: Schedule = {id:"", cinemaId:"", filmId:"", sessions: [{showDate: new Date(), showTime:{hours: 0, minutes:0}, hall: 0, numberSeats: 0}]};
+  schedule: Schedule = {id:"", cinemaId:"", filmId:"", sessions: [{showDate: new Date(), showTime:{hours: 0, minutes:0}, hall: 0, numberSeats: 0}]};
 
-  @Input() today?: string;
+  today: string = "";
   showModalEdit?: boolean;
+
+  date: Date = new Date()
   constructor(
     private readonly editModalService: EditModalService,
     private readonly showModalService: ShowModalService
   ) {
     this.showModalService.showModalEdit$.subscribe((showModalEdit) => this.showModalEdit = showModalEdit);
     this.editModalService.schedule.subscribe( (schedule) => this.schedule = schedule); // не успевает сработать и выполняется ngOnInit
+    if(this.schedule && this.schedule.sessions && this.schedule.sessions[0].showDate && this.schedule.id){
+      this.date = this.schedule.sessions[0].showDate;
+      console.log(this.date)
+      setTimeout(() => this.today = this.parseDate(this.date.toLocaleDateString()), 100)
+    }
+  }
+
+  ngOnInit(date: Date): void {
+    /*if(this.schedule && this.schedule.sessions && this.schedule.sessions[0].showDate && this.schedule.id){
+      date = this.schedule.sessions[0].showDate;
+      setTimeout(() => this.today = this.parseDate(date.toLocaleDateString()), 100)
+    }*/
+  }
+
+  parseDate(s: string | undefined): string{
+    if(!s) return "";
+    return s.replaceAll(".", "-").split('-').reverse().join("-")
   }
 
   public saveEditFilmSchedule(showModalEdit: boolean) {

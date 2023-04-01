@@ -2,17 +2,20 @@ import { Injectable } from '@angular/core';
 import {Subject} from "rxjs";
 import {Schedule} from "../models/schedule";
 import {Cinema} from "../models/cinema";
+import {Film} from "../models/film";
 
 @Injectable({
   providedIn: 'root'
 })
 export class EditModalService {
-  public schedule = new Subject<Schedule | undefined>();
+  public schedule = new Subject<Schedule>();
   public editSchedule = new Subject<Schedule | undefined>();
   public cinema = new Subject<Cinema>();
   public editCinema = new Subject<Cinema | undefined>();
+  public film = new Subject<Film>();
+  public editFilm = new Subject<Film | undefined>();
 
-  public setSchedule(schedule: Schedule | undefined) {
+  public setSchedule(schedule: Schedule) {
     this.schedule.next(schedule);
   }
 
@@ -26,6 +29,14 @@ export class EditModalService {
 
   public setEditCinema(cinema: Cinema | undefined){
     this.editCinema.next(cinema);
+  }
+
+  public setFilm(film: Film) {
+    this.film.next(film);
+  }
+
+  public setEditFilm(film: Film | undefined){
+    this.editFilm.next(film);
   }
 
 }

@@ -25,12 +25,12 @@ export class CinemaComponent {
   }
 
   setShowModalEdit(showModalEdit: boolean): void{
-    this.editModalService.setCinema(this.cloneSchedule(this.cinema));
+    this.editModalService.setCinema(this.cloneCinema(this.cinema));
     this.showModalService.setShowModalEdit(showModalEdit);
   }
 
 
-  private cloneSchedule(cinema: Cinema | undefined): Cinema{
+  private cloneCinema(cinema: Cinema | undefined): Cinema{
     let s = JSON.stringify(cinema)
     return JSON.parse(s)
   }

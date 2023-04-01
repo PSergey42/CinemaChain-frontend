@@ -9,7 +9,4 @@ import {Genre} from "../../../models/genre";
 export class GenreInFilmComponent {
   @Input() genre: Genre = {id: "", name: ""}
 
-  delGenre() {
-
-  }
 }
