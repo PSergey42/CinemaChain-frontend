@@ -1,6 +1,6 @@
 <div class="mt-10 flex flex-col items-center">
   <div class="flex">
-    <h2 class="text-7xl mb-4 font-bold">{{film?.name}}</h2>
+    <h2 class="text-7xl mb-4 font-bold">{{film.name}}</h2>
     <button type="button" (click)="setShowModal(!showModal)" class="ml-4 mt-4 bottom-1 text-lg text-red-400 font-semibold hover:scale-105 ">
       Редактировать
     </button>
@@ -10,19 +10,19 @@
       <label class="block mb-2 text-xl font-medium text-gray-900 dark:text-white flex justify-center">Жанры</label>
       <div class="h-[30rem] w-[440px] overflow-y-auto bg-gray-50 border border-gray-300 rounded-lg">
         <div class="grid grid-cols-2 gap-3">
-          <app-genre-in-film *ngFor="let genre of film?.genres" [genre]="genre"/>
+          <app-genre-in-film *ngFor="let genre of film.genres" [genre]="genre"/>
         </div>
       </div>
     </div>
     <div class="mt-10">
       <p class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Дата выхода: {{film.dateExits.toLocaleDateString()}}</p>
-      <p class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Бюджет: {{film?.budget}}$</p>
+      <p class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Бюджет: {{film.budget}}$</p>
     </div>
     <div class="mr-[10rem]">
       <label class="block mb-2 text-xl font-medium text-gray-900 dark:text-white flex justify-center">Актеры</label>
       <div class="">
         <div class="h-[30rem] w-[440px] overflow-y-auto bg-gray-50 border border-gray-300 rounded-lg">
-          <app-actor-in-film *ngFor="let actor of film?.actors" [actor]="actor"/>
+          <app-actor-in-film *ngFor="let actor of film.actors" [actor]="actor"/>
         </div>
       </div>
     </div>

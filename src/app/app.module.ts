@@ -23,6 +23,7 @@ import { ActorsAndGenresComponent } from './components/actors-and-genres/actors-
 import { ActorInFilmComponent } from './components/film/actor-in-film/actor-in-film.component';
 import { GenreInFilmComponent } from './components/film/genre-in-film/genre-in-film.component';
 import { EditFilmComponent } from './components/modal/edit-film/edit-film.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { EditFilmComponent } from './components/modal/edit-film/edit-film.compon
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

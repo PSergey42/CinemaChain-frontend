@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {ShowModalService} from "../../../service/show-modal.service";
 import {EditModalService} from "../../../service/edit-modal.service";
 import {Cinema} from "../../../models/cinema";
+import {CinemaService} from "../../../service/http/cinema.service";
 
 @Component({
   selector: 'app-edit-cinema',
@@ -14,6 +15,7 @@ export class EditCinemaComponent {
   cinema: Cinema = {id: "", name: "", address: ""}
 
   constructor(
+    private cinemaService: CinemaService,
     private readonly showModalService: ShowModalService,
     private readonly editModalService: EditModalService
   ) {
@@ -26,6 +28,7 @@ export class EditCinemaComponent {
   }
 
   public saveEditFilmSchedule(showModalEdit: boolean) {
+    this.cinemaService.updateCinema(this.cinema).subscribe()
     this.showModalService.setShowModalEdit(showModalEdit);
     this.editModalService.setEditCinema(this.cinema)
   }

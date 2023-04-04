@@ -1,5 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Actor} from "../../models/actor";
+import {GenreService} from "../../service/http/genre.service";
+import {ActorService} from "../../service/http/actor.service";
 
 @Component({
   selector: 'app-actor',
@@ -11,6 +13,10 @@ export class ActorComponent {
 
   isEdit: boolean = false;
 
+  constructor(
+    private actorService: ActorService
+  ) {}
+
   ngOnInit(){
     if(!(this.actor.fio && this.actor.id)){
       this.isEdit = true;
@@ -21,10 +27,11 @@ export class ActorComponent {
     this.isEdit = true;
   }
   delActor(){
-
+    this.actorService.deleteActor(this.actor.id).subscribe();
   }
   updateActor(){
     if(this.actor.fio){
+      this.actorService.updateActor(this.actor).subscribe();
       this.isEdit = false;
     }
   }

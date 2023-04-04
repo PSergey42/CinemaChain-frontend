@@ -3,6 +3,7 @@ import {Cinema} from "../../models/cinema";
 import {EditModalService} from "../../service/edit-modal.service";
 import {ShowModalService} from "../../service/show-modal.service";
 import {Schedule} from "../../models/schedule";
+import {CinemaService} from "../../service/http/cinema.service";
 
 @Component({
   selector: 'app-cinema',
@@ -14,6 +15,7 @@ export class CinemaComponent {
 
   showModalEdit?: boolean;
   constructor(
+    private cinemaService: CinemaService,
     private readonly showModalService: ShowModalService,
     private readonly editModalService: EditModalService
   ) {
@@ -35,4 +37,9 @@ export class CinemaComponent {
     return JSON.parse(s)
   }
 
+  delete() {
+    if(this.cinema){
+      this.cinemaService.deleteCinema(this.cinema.id).subscribe();
+    }
+  }
 }
