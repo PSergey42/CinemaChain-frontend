@@ -4,6 +4,9 @@ import {Genre} from "../../../models/genre";
 import {ShowModalService} from "../../../service/show-modal.service";
 import {Film} from "../../../models/film";
 import {EditModalService} from "../../../service/edit-modal.service";
+import {GenreService} from "../../../service/http/genre.service";
+import {ActorService} from "../../../service/http/actor.service";
+import {FilmService} from "../../../service/http/film.service";
 
 @Component({
   selector: 'app-edit-film',
@@ -12,23 +15,28 @@ import {EditModalService} from "../../../service/edit-modal.service";
 })
 export class EditFilmComponent {
   showModal?: boolean;
-
   today: string = "";
-  @Input() film: Film = {id: "", budget: 0, name: "", dateExits: new Date(), actors: [], genres: []}
-  actors: Actor[] = [] //из запроса
-  genres: Genre[] = [] //из запроса
+  film: Film = {id: "", budget: 0, name: "", dateExits: new Date(), actors: [], genres: []}
+  actors: Actor[] = []
+  genres: Genre[] = []
 
   constructor(
+    private genreService: GenreService,
+    private actorService: ActorService,
+    private filmService: FilmService,
     private readonly showModalService: ShowModalService,
     private readonly editModalService: EditModalService
-  ) {}
+  ) {
+    this.editModalService.film.subscribe((film) => {
+      this.film = film
+      this.today = this.parseDate(new Date(this.film.dateExits).toLocaleDateString())
+    });
+    this.showModalService.showModal$.subscribe((showModal) => this.showModal = showModal);
+  }
 
   ngOnInit(): void {
-    /*this.film.actors.forEach(x => this.actors.push(x));
-    this.film.genres.forEach(x => this.genres.push(x));*/
-    this.showModalService.showModal$.subscribe((showModal) => this.showModal = showModal);
-    this.editModalService.film.subscribe((film) => this.film = film);
-    this.today = this.parseDate(this.film.dateExits.toLocaleDateString());
+    this.genreService.getGenres().subscribe(genres => this.genres = genres);
+    this.actorService.getActors().subscribe(actors => this.actors = actors);
   }
 
   parseDate(s: string): string{
@@ -40,9 +48,15 @@ export class EditFilmComponent {
   }
 
   public saveEditFilm(showModal: boolean) {
-    this.showModalService.setShowModal(showModal);
-    this.film.dateExits = new Date(this.today)
-    this.editModalService.setEditFilm(this.film)
+    if(this.checkFilm() && this.today){
+      this.showModalService.setShowModal(showModal);
+      this.film.dateExits = new Date(this.today)
+      this.filmService.updateFilm(this.film).subscribe()
+    }
+  }
+
+  checkFilm(): boolean{
+    return !!(this.film.budget > 0 && this.film.name && this.film.actors.length && this.film.genres.length);
   }
 
   public cancelEditFilm(showModal: boolean) {
@@ -56,6 +70,7 @@ export class EditFilmComponent {
     else {
       this.film.actors.push(actor);
     }
+    console.log(this.film)
   }
 
   onChangeGenres(genre: Genre) {

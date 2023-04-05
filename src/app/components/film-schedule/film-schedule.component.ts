@@ -3,6 +3,8 @@ import {Schedule} from "../../models/schedule";
 import {Film} from "../../models/film";
 import {ShowModalService} from "../../service/show-modal.service";
 import {EditModalService} from "../../service/edit-modal.service";
+import {FilmService} from "../../service/http/film.service";
+import {ScheduleService} from "../../service/http/schedule.service";
 
 @Component({
   selector: 'app-film-schedule',
@@ -10,12 +12,14 @@ import {EditModalService} from "../../service/edit-modal.service";
   styleUrls: ['./film-schedule.component.css']
 })
 export class FilmScheduleComponent {
-  @Input() schedule?: Schedule;
-  @Input() today?: string;
-  film?: Film = {id: "33", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []}; //из запроса по filmId
+  @Input() schedule: Schedule = {id: "", cinemaId: "", filmId: "", sessions: []};
+  @Input() today: string = "";
+  film: Film = {id: "", name: "", budget: 0, dateExits: new Date(), actors: [], genres: []};
 
   showModalEdit?: boolean;
   constructor(
+    private scheduleService: ScheduleService,
+    private filmService: FilmService,
     private readonly editModalService: EditModalService,
     private readonly showModalService: ShowModalService
   ) {
@@ -26,6 +30,7 @@ export class FilmScheduleComponent {
   })}
 
   ngOnInit(): void {
+    this.filmService.getFilmById(this.schedule.filmId).subscribe(film => this.film = film)
   }
 
   public setShowModalEdit(showModalEdit: boolean): void {
@@ -38,4 +43,7 @@ export class FilmScheduleComponent {
     return JSON.parse(s)
   }
 
+  delete() {
+    this.scheduleService.deleteSchedule(this.schedule.id).subscribe()
+  }
 }

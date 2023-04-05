@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {BehaviorSubject, catchError, Observable, of, tap} from "rxjs";
+import {BehaviorSubject, catchError, Observable, of, Subject, tap} from "rxjs";
 import {Film} from "../../models/film";
 
 @Injectable({
@@ -11,6 +11,7 @@ export class FilmService {
   private url = "http://localhost:8080/api/film";
 
   public films = new BehaviorSubject<Film[]>([]);
+  public film = new Subject<Film>();
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -30,6 +31,18 @@ export class FilmService {
       );
   }
 
+  getFilmById(id: string): Observable<Film>{
+    const url = `${this.url}/${id}`;
+    return this.http.get<Film>(url)
+      .pipe(
+        tap(film => {
+          film.dateExits = new Date(film.dateExits)
+          this.film.next(film)
+        }),
+        catchError(this.handleError<Film>('getFilm'))
+      );
+  }
+
   addFilm(film: Film): Observable<Film> {
     return this.http.post<Film>(this.url, film, this.httpOptions).pipe(
       tap((newFilm: Film) => this.setFilms(newFilm)),
@@ -45,9 +58,12 @@ export class FilmService {
     );
   }
 
-  updateFilm(film: Film): Observable<any> {
-    return this.http.put(this.url, film, this.httpOptions).pipe(
-      tap(_ => console.log(`updated film id=${film.id}`)),
+  updateFilm(film: Film): Observable<Film> {
+    return this.http.put<Film>(this.url, film, this.httpOptions).pipe(
+      tap(film => {
+        film.dateExits = new Date(film.dateExits)
+        this.film.next(film)
+      }),
       catchError(this.handleError<any>('updateFilm'))
     );
   }

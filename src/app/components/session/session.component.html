@@ -1,5 +1,5 @@
 <div class="border-2 h-[2rem] border-black flex items-center justify-center hover:scale-105 hover:border-red-800" (mouseenter)="isOpen = true" (mouseleave)="isOpen = false">
-{{session?.showTime?.hours + ":" + session?.showTime?.minutes}}
+{{session?.showTime}}
   <div *ngIf="isOpen" class="absolute mt-[7rem] h-[4rem] border-2 w-[8rem] bg-white rounded-2xl">
     <div class="flex justify-between px-[0.7rem] mb-1">
       <label class="block flex items-center text-[0.75rem] font-medium text-gray-900 dark:text-white">Свободно:</label>

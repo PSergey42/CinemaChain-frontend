@@ -4,6 +4,7 @@ import {Schedule} from "../../models/schedule";
 import {ShowModalService} from "../../service/show-modal.service";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
+import {ScheduleService} from "../../service/http/schedule.service";
 
 @Component({
   selector: 'app-schedule',
@@ -11,28 +12,16 @@ import {Subscription} from "rxjs";
   styleUrls: ['./schedule.component.css']
 })
 export class ScheduleComponent implements OnInit{
-  schedules: Schedule[] = [{id: "1", filmId: "уауауа", cinemaId: "ffwfw", sessions: [{showDate: new Date(), showTime: {hours: 10, minutes: 15}, hall: 6, numberSeats: 20},
-      {showDate: new Date(), showTime: {hours: 10, minutes: 15}, hall: 6, numberSeats: 20},
-      {showDate: new Date(), showTime: {hours: 10, minutes: 15}, hall: 6, numberSeats: 20},
-      {showDate: new Date(), showTime: {hours: 10, minutes: 15}, hall: 6, numberSeats: 20},
-      {showDate: new Date(), showTime: {hours: 10, minutes: 15}, hall: 6, numberSeats: 20},
-      {showDate: new Date(), showTime: {hours: 10, minutes: 15}, hall: 6, numberSeats: 20},
-      {showDate: new Date(), showTime: {hours: 10, minutes: 15}, hall: 6, numberSeats: 20},
-      {showDate: new Date(), showTime: {hours: 10, minutes: 15}, hall: 6, numberSeats: 20},
-      {showDate: new Date(), showTime: {hours: 10, minutes: 15}, hall: 6, numberSeats: 20}]},
-    {id: "2", filmId: "уауrа", cinemaId: "ffrtfw", sessions: [{showDate: new Date(), showTime: {hours: 11, minutes: 20}, hall: 6, numberSeats: 20},
-        {showDate: new Date(), showTime: {hours: 10, minutes: 15}, hall: 6, numberSeats: 20},
-        {showDate: new Date(), showTime: {hours: 10, minutes: 15}, hall: 6, numberSeats: 20},
-        {showDate: new Date(), showTime: {hours: 10, minutes: 15}, hall: 6, numberSeats: 20},
-        {showDate: new Date(), showTime: {hours: 10, minutes: 15}, hall: 6, numberSeats: 20},
-        {showDate: new Date(), showTime: {hours: 10, minutes: 15}, hall: 6, numberSeats: 20}]}]
-
+  schedules: Schedule[] = []
   showModal = false;
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private scheduleService: ScheduleService,
+    private route: ActivatedRoute,
     private readonly showModalService: ShowModalService
   ) {
     this.date = new Date('2001-09-23')
-    route.params.subscribe(params => this.getListFilmByDate(params['id'], this.parseDate(this.date.toLocaleDateString()))) // schedules = this.get.....
+    route.params.subscribe(params => this.getListFilmByDate(params['id'], this.parseDate(this.date.toLocaleDateString())))
+    this.scheduleService.schedules.subscribe(schedules => this.schedules = schedules)
   }
 
   public setShowModal(showModal: boolean): void {
@@ -40,7 +29,7 @@ export class ScheduleComponent implements OnInit{
   }
   date: Date
 
-  today?: string;
+  today: string = "";
 
   ngOnInit() {
     this.today = this.parseDate(this.date.toLocaleDateString());
@@ -51,7 +40,8 @@ export class ScheduleComponent implements OnInit{
   }
 
   getListFilmByDate(cinema_id: string, date: string): void{
-    /*this.date = new Date(date);*/
+    //this.date = new Date(date);
+    this.scheduleService.getSchedules(cinema_id, date).subscribe()
     //запрос в бд по дате и айди кинотеатра
   }
 

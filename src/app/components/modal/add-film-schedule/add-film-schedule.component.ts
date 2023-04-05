@@ -1,7 +1,11 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {ShowModalService} from "../../../service/show-modal.service";
 import {Film} from "../../../models/film";
-import {Session} from "../../../models/session";
+import {ScheduleService} from "../../../service/http/schedule.service";
+import {FilmService} from "../../../service/http/film.service";
+import {Schedule} from "../../../models/schedule";
+import {ActivatedRoute} from "@angular/router";
+import {Time} from "@angular/common";
 
 @Component({
   selector: 'app-add-film-schedule',
@@ -12,47 +16,53 @@ export class AddFilmScheduleComponent implements OnInit{
 
   @Input() today?: string;
 
-  films: Film[] = [{id: "31", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []},
-    {id: "32", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []},
-    {id: "33", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []},
-    {id: "34", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []},
-    {id: "35", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []}]
+  films: Film[] = []
 
-  schedule: Session[] = [];
+  schedule: Schedule = {id: "", cinemaId: "", filmId: "", sessions: []}
   showModal?: boolean;
 
   constructor(
+    private scheduleService: ScheduleService,
+    private filmService: FilmService,
+    private route: ActivatedRoute,
     private readonly showModalService: ShowModalService
-  ) {}
+  ) {
+    this.filmService.films.subscribe(films => this.films = films)
+    this.scheduleService.schedule.subscribe(schedule => this.schedule = schedule)
+    route.params.subscribe(params => this.schedule.cinemaId = params['id'])
+  }
 
   ngOnInit(): void {
+    this.filmService.getFilms().subscribe();
     this.showModalService.showModal$.subscribe((showModal) => this.showModal = showModal);
   }
 
   public setShowModal(showModal: boolean): void {
       this.selectedFilm("");
-      this.schedule = [];
+      this.schedule = {id: "", cinemaId: "", filmId: "", sessions: []};
       this.showModalService.setShowModal(showModal);
   }
 
   addSessionFilm() {
-    if(this.isCheckbox){
-      this.schedule?.push({showDate: new Date(this.today as string), showTime: undefined, hall: undefined, numberSeats: undefined})
+    if(this.isCheckbox && (this.schedule.sessions.length === 0 || this.checkSession())){
+      this.schedule.sessions.push({showDate: new Date(this.today as string), showTime: undefined, hall: 0, numberSeats: 0})
     }
+  }
+  checkSession(): boolean{
+    return this.schedule.sessions.some(s => s.showTime && s.hall > 0 && s.numberSeats >= 0);
   }
 
   checkSessions(): boolean {
-    if(this.schedule.length == 0){
+    if(this.schedule.sessions.length == 0){
       document?.getElementById("add")?.setAttribute("disabled", "disabled");
       return true;
     }
-    for(let s of this.schedule){
+    for(let s of this.schedule.sessions){
         if(!(s.hall && s.numberSeats && s.showTime)) {
           document?.getElementById("add")?.setAttribute("disabled", "disabled");
           return true;
         }
     }
-
     document?.getElementById("add")?.removeAttribute("disabled");
     return true;
   }
@@ -62,6 +72,7 @@ export class AddFilmScheduleComponent implements OnInit{
       for (let f of this.films){
         if(f.id != id) document?.getElementById(f.id)?.setAttribute("disabled", "disabled");
       }
+      this.schedule.filmId = id;
       this.isCheckbox = true;
     } else {
       for (let f of this.films){
@@ -70,4 +81,10 @@ export class AddFilmScheduleComponent implements OnInit{
       this.isCheckbox = false;
     }
   }
+
+  add(showModal: boolean) {
+    this.scheduleService.addSchedule(this.schedule).subscribe();
+    this.setShowModal(showModal);
+  }
+
 }

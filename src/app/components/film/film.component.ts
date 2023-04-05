@@ -1,8 +1,9 @@
 import {Component, Input} from '@angular/core';
 import {Film} from "../../models/film";
 import {ShowModalService} from "../../service/show-modal.service";
-import {Cinema} from "../../models/cinema";
 import {EditModalService} from "../../service/edit-modal.service";
+import {FilmService} from "../../service/http/film.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-film',
@@ -10,20 +11,28 @@ import {EditModalService} from "../../service/edit-modal.service";
   styleUrls: ['./film.component.css']
 })
 export class FilmComponent {
-  film: Film = {id: "33", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [{id: "12", fio: "Илья"}, {id: "12", fio: "Илья2"}, {id: "12", fio: "Илья3"}],
-    genres: [{id: "12", name: "Боевик"}, {id: "12", name: "Боевик"}, {id: "12", name: "Боевик"}, {id: "12", name: "Боевик"}]}; //из запроса
+  film: Film = {id: "", name: "", budget: 0, dateExits: new Date(), actors: [], genres: []}
+
+  today: string = ""
 
   showModal = false;
 
   constructor(
+    private route: ActivatedRoute,
+    private filmService: FilmService,
     private readonly showModalService: ShowModalService,
     private readonly editModalService: EditModalService
   ) {
-    this.editModalService.editFilm.subscribe((film) => {
-      if(film && this.film?.id == film?.id){
-        this.film = film;
-      }
-    })
+    this.filmService.film.subscribe(film => this.film = film)
+    route.params.subscribe(params => this.film.id = params['id'])
+  }
+
+  ngOnInit(): void {
+    this.getFilms();
+  }
+
+  getFilms(): void {
+    this.filmService.getFilmById(this.film.id).subscribe();
   }
 
   public setShowModal(showModal: boolean): void {

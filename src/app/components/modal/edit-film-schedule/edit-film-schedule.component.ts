@@ -11,7 +11,7 @@ import {EditModalService} from "../../../service/edit-modal.service";
 })
 //TODO добавить возможность редактировать дату
 export class EditFilmScheduleComponent{
-  schedule: Schedule = {id:"", cinemaId:"", filmId:"", sessions: [{showDate: new Date(), showTime:{hours: 0, minutes:0}, hall: 0, numberSeats: 0}]};
+  schedule: Schedule = {id:"", cinemaId:"", filmId:"", sessions: [{showDate: new Date(), showTime: undefined, hall: 0, numberSeats: 0}]};
 
   today: string = "";
   showModalEdit?: boolean;
@@ -52,6 +52,6 @@ export class EditFilmScheduleComponent{
   }
 
   addSessionFilm() {
-    this.schedule?.sessions?.push({showDate: new Date(this.today as string), showTime: undefined, hall: undefined, numberSeats: undefined})
+    this.schedule?.sessions?.push({showDate: new Date(this.today as string), showTime: undefined, hall: 0, numberSeats: 0})
   }
 }

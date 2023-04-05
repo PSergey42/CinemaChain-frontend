@@ -3,6 +3,9 @@ import {Film} from "../../models/film";
 import {ShowModalService} from "../../service/show-modal.service";
 import {Actor} from "../../models/actor";
 import {Genre} from "../../models/genre";
+import {FilmService} from "../../service/http/film.service";
+import {GenreService} from "../../service/http/genre.service";
+import {ActorService} from "../../service/http/actor.service";
 
 @Component({
   selector: 'app-films',
@@ -10,21 +13,35 @@ import {Genre} from "../../models/genre";
   styleUrls: ['./films.component.css']
 })
 export class FilmsComponent {
-  films?: Film[] = [{id: "33", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []},
-    {id: "33", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []},
-    {id: "33", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []},
-    {id: "33", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []},
-    {id: "33", name: "Илюха возмездие", budget: 10000, dateExits: new Date(), actors: [], genres: []}]
-
-  actors?: Actor[] = [{id: "12", fio: "Илья"}, {id: "12", fio: "Илья2"}, {id: "12", fio: "Илья3"}, {id: "12", fio: "Илья2"}, {id: "12", fio: "Илья2"}, {id: "12", fio: "Илья2"}, {id: "12", fio: "Илья2"}]//из запроса
-  genres?: Genre[] //из запроса
+  films: Film[] = []
+  actors: Actor[] = []
+  genres: Genre[] = []
   showModal = false;
 
   constructor(
+    private genreService: GenreService,
+    private actorService: ActorService,
+    private filmService: FilmService,
     private readonly showModalService: ShowModalService
-  ) {}
+  ) {
+    this.filmService.films.subscribe(films => this.films = films);
+  }
+
+  ngOnInit(): void {
+    this.getFilms();
+  }
+
+  getFilms(): void {
+    this.filmService.getFilms().subscribe(films => this.films = films);
+    this.genreService.getGenres().subscribe(genres => this.genres = genres);
+    this.actorService.getActors().subscribe(actors => this.actors = actors);
+  }
 
   public setShowModal(showModal: boolean): void {
     this.showModalService.setShowModal(showModal);
+  }
+
+  deleteFilm(id: string) {
+    this.filmService.deleteFilm(id).subscribe()
   }
 }

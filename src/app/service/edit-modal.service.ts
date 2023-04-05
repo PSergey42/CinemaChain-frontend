@@ -13,7 +13,6 @@ export class EditModalService {
   public cinema = new Subject<Cinema>();
   public editCinema = new Subject<Cinema | undefined>();
   public film = new Subject<Film>();
-  public editFilm = new Subject<Film | undefined>();
 
   public setSchedule(schedule: Schedule) {
     this.schedule.next(schedule);
@@ -33,10 +32,6 @@ export class EditModalService {
 
   public setFilm(film: Film) {
     this.film.next(film);
-  }
-
-  public setEditFilm(film: Film | undefined){
-    this.editFilm.next(film);
   }
 
 }
