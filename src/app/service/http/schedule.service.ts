@@ -60,6 +60,7 @@ export class ScheduleService {
   }
 
   updateSchedule(schedule: Schedule): Observable<Schedule> {
+    schedule.sessions.map(s => s.showTime = s.showTime + ":00")
     return this.http.put<Schedule>(this.url, schedule, this.httpOptions).pipe(
       tap(schedule => {
         /*film.dateExits = new Date(film.dateExits)

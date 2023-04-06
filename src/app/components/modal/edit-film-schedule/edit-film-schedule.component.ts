@@ -3,6 +3,7 @@ import {ShowModalService} from "../../../service/show-modal.service";
 import {Schedule} from "../../../models/schedule";
 import {Time} from "@angular/common";
 import {EditModalService} from "../../../service/edit-modal.service";
+import {ScheduleService} from "../../../service/http/schedule.service";
 
 @Component({
   selector: 'app-edit-film-schedule',
@@ -16,35 +17,36 @@ export class EditFilmScheduleComponent{
   today: string = "";
   showModalEdit?: boolean;
 
-  date: Date = new Date()
   constructor(
+    private scheduleService: ScheduleService,
     private readonly editModalService: EditModalService,
     private readonly showModalService: ShowModalService
   ) {
     this.showModalService.showModalEdit$.subscribe((showModalEdit) => this.showModalEdit = showModalEdit);
-    this.editModalService.schedule.subscribe( (schedule) => this.schedule = schedule); // не успевает сработать и выполняется ngOnInit
-    if(this.schedule && this.schedule.sessions && this.schedule.sessions[0].showDate && this.schedule.id){
-      this.date = this.schedule.sessions[0].showDate;
-      console.log(this.date)
-      setTimeout(() => this.today = this.parseDate(this.date.toLocaleDateString()), 100)
-    }
+    this.editModalService.schedule.subscribe( (schedule) => {
+      this.schedule = schedule
+      if(this.schedule && this.schedule.sessions[0] && this.schedule.sessions[0].showDate)
+        this.today = this.parseDate(new Date(this.schedule.sessions[0].showDate).toLocaleDateString());
+    });
   }
 
-  ngOnInit(date: Date): void {
-    /*if(this.schedule && this.schedule.sessions && this.schedule.sessions[0].showDate && this.schedule.id){
-      date = this.schedule.sessions[0].showDate;
-      setTimeout(() => this.today = this.parseDate(date.toLocaleDateString()), 100)
-    }*/
-  }
-
-  parseDate(s: string | undefined): string{
-    if(!s) return "";
+  parseDate(s: string): string{
     return s.replaceAll(".", "-").split('-').reverse().join("-")
   }
 
+  ngOnInit(): void {
+
+  }
+
   public saveEditFilmSchedule(showModalEdit: boolean) {
+    this.scheduleService.updateSchedule(this.cloneSchedule(this.schedule)).subscribe();
     this.showModalService.setShowModalEdit(showModalEdit);
     this.editModalService.setEditSchedule(this.schedule)
+  }
+
+  private cloneSchedule(schedule: Schedule | undefined): Schedule{
+    let s = JSON.stringify(schedule)
+    return JSON.parse(s)
   }
 
   public cancelEditFilmSchedule(showModalEdit: boolean) {
@@ -52,6 +54,12 @@ export class EditFilmScheduleComponent{
   }
 
   addSessionFilm() {
-    this.schedule?.sessions?.push({showDate: new Date(this.today as string), showTime: undefined, hall: 0, numberSeats: 0})
+    if(!this.checkSession()){
+      this.schedule.sessions.push({showDate: new Date(this.today as string), showTime: undefined, hall: 0, numberSeats: 0})
+    }
+  }
+
+  checkSession(): boolean{
+    return this.schedule.sessions.some(s => !s.showTime || s.hall < 0 || s.numberSeats < 0);
   }
 }
