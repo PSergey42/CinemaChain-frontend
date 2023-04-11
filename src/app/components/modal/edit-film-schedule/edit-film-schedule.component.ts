@@ -4,19 +4,20 @@ import {Schedule} from "../../../models/schedule";
 import {Time} from "@angular/common";
 import {EditModalService} from "../../../service/edit-modal.service";
 import {ScheduleService} from "../../../service/http/schedule.service";
+import {Session} from "../../../models/session";
 
 @Component({
   selector: 'app-edit-film-schedule',
   templateUrl: './edit-film-schedule.component.html',
   styleUrls: ['./edit-film-schedule.component.css']
 })
-//TODO добавить возможность редактировать дату
 export class EditFilmScheduleComponent{
   schedule: Schedule = {id:"", cinemaId:"", filmId:"", sessions: [{showDate: new Date(), showTime: undefined, hall: 0, numberSeats: 0}]};
 
   today: string = "";
   showModalEdit?: boolean;
-
+  listDelSession: Session[] = []
+  date: string = ""
   constructor(
     private scheduleService: ScheduleService,
     private readonly editModalService: EditModalService,
@@ -27,6 +28,7 @@ export class EditFilmScheduleComponent{
       this.schedule = schedule
       if(this.schedule && this.schedule.sessions[0] && this.schedule.sessions[0].showDate)
         this.today = this.parseDate(new Date(this.schedule.sessions[0].showDate).toLocaleDateString());
+        this.date = this.today;
     });
   }
 
@@ -39,9 +41,17 @@ export class EditFilmScheduleComponent{
   }
 
   public saveEditFilmSchedule(showModalEdit: boolean) {
-    this.scheduleService.updateSchedule(this.cloneSchedule(this.schedule)).subscribe();
-    this.showModalService.setShowModalEdit(showModalEdit);
-    this.editModalService.setEditSchedule(this.schedule)
+    if(this.schedule.sessions.length !== 0){
+      this.schedule.sessions.map(x => x.showDate = new Date(this.today))
+      this.scheduleService.updateSchedule(this.cloneSchedule(this.schedule), this.date).subscribe();
+      this.showModalService.setShowModalEdit(showModalEdit);
+      this.editModalService.setEditSchedule(this.schedule)
+    }
+    if(this.listDelSession.length !== 0){
+      console.log(this.listDelSession)
+      this.listDelSession.map(s => this.scheduleService.deleteSession(s.id!).subscribe())
+    }
+    this.listDelSession = []
   }
 
   private cloneSchedule(schedule: Schedule | undefined): Schedule{
@@ -51,15 +61,26 @@ export class EditFilmScheduleComponent{
 
   public cancelEditFilmSchedule(showModalEdit: boolean) {
     this.showModalService.setShowModalEdit(showModalEdit);
+    this.listDelSession = []
   }
 
   addSessionFilm() {
     if(!this.checkSession()){
-      this.schedule.sessions.push({showDate: new Date(this.today as string), showTime: undefined, hall: 0, numberSeats: 0})
+      this.schedule.sessions.push({id: 0, showDate: new Date(this.today as string), showTime: undefined, hall: 0, numberSeats: 0})
     }
   }
 
   checkSession(): boolean{
     return this.schedule.sessions.some(s => !s.showTime || s.hall < 0 || s.numberSeats < 0);
+  }
+
+  delete(id: number){
+    if(id == 0){
+      this.schedule.sessions.pop();
+    }
+    else{
+      this.listDelSession.push(this.schedule.sessions.find(s => s.id == id)!)
+      this.schedule.sessions = this.schedule.sessions.filter(s => s.id != id);
+    }
   }
 }

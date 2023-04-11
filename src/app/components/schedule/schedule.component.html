@@ -1,6 +1,6 @@
 <div class="flex justify-center my-5 gap-4">
-  <input class="w-1/2 px-3 focus:outline-none focus:border-red-800 rounded-2xl border-2 hover:border-red-800" type="search" placeholder="Название фильма" aria-label="Search">
-  <button class="p-1.5 px-3 rounded-2xl border-2 hover:border-red-800 " type="submit">Поиск</button>
+  <input [(ngModel)]="search" class="w-1/2 px-3 focus:outline-none focus:border-red-800 rounded-2xl border-2 hover:border-red-800" type="search" placeholder="Название фильма" aria-label="Search">
+  <button (click)="searchSchedule()" class="p-1.5 px-3 rounded-2xl border-2 hover:border-red-800 " type="submit">Поиск</button>
 </div>
 <div class="flex justify-center my-5">
   <input type="date" [value]="today" [(ngModel)]="today" class="w-[220px] h-[42px] border-2 hover:border-red-800 text-gray-900 focus:outline-none focus:border-red-800 text-sm rounded-lg p-2.5" required>

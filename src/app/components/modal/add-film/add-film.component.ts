@@ -36,6 +36,7 @@ export class AddFilmComponent implements OnInit{
       this.filmService.addFilm(this.film).subscribe()
       this.setShowModal(showModal);
       this.film = {id: "", name: "", budget: 0, dateExits: new Date(), actors: [], genres: []};
+      this.today = ""
     }
   }
 

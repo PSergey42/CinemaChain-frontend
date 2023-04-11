@@ -13,37 +13,40 @@ import {ScheduleService} from "../../service/http/schedule.service";
 })
 export class ScheduleComponent implements OnInit{
   schedules: Schedule[] = []
+  cinemaId: string = "";
   showModal = false;
+  search: string = ""
   constructor(
     private scheduleService: ScheduleService,
     private route: ActivatedRoute,
     private readonly showModalService: ShowModalService
   ) {
-    this.date = new Date('2001-09-23')
-    route.params.subscribe(params => this.getListFilmByDate(params['id'], this.parseDate(this.date.toLocaleDateString())))
+    this.cinemaId = route.snapshot.paramMap.get('id')!
     this.scheduleService.schedules.subscribe(schedules => this.schedules = schedules)
   }
 
   public setShowModal(showModal: boolean): void {
     this.showModalService.setShowModal(showModal);
   }
-  date: Date
 
-  today: string = "";
+  today = '2001-09-23';
 
   ngOnInit() {
-    this.today = this.parseDate(this.date.toLocaleDateString());
-  }
-
-  parseDate(s: string): string{
-    return s.replaceAll(".", "-").split('-').reverse().join("-")
+    this.getListFilmByDate(this.cinemaId, this.today);
   }
 
   getListFilmByDate(cinema_id: string, date: string): void{
-    //this.date = new Date(date);
     this.scheduleService.getSchedules(cinema_id, date).subscribe()
-    //запрос в бд по дате и айди кинотеатра
   }
 
+  searchSchedule() {
+    if(this.search){
+      this.scheduleService.searchSchedule(this.cinemaId, this.search, this.today).subscribe();
+      this.search = "";
+    }
+    else {
+      this.scheduleService.getSchedules(this.cinemaId, this.today).subscribe();
+    }
+  }
 }
 

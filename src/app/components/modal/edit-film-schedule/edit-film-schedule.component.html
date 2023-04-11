@@ -16,14 +16,14 @@
       <div class="p-6 space-y-6 select-none">
         <div class="flex justify-center items-center gap-2">
           <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Дата показа:</label>
-          <input type="date" [(ngModel)]="today" class="h-[1.5rem] block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <input type="date" [(ngModel)]="today" class="h-[1.7rem] block mb-2 pl-1 text-sm font-medium text-gray-900 dark:text-white">
         </div>
           <div class="flex flex-col justify-center items-center">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Сеансы</label>
-            <div class="h-48 w-[380px] overflow-y-auto bg-gray-50 border border-gray-300 rounded-lg">
-              <div class="mt-3 grid grid-cols-2 gap-3 ml-[15px] ">
-                <app-edit-session *ngFor="let session of schedule?.sessions" [session]="session"/>
-                <button type="button" (click)="addSessionFilm()" class="cursor-pointer flex items-center w-[10rem] h-[6rem] justify-center relative hover:scale-105 rounded-lg hover:border-red-800 border-2 border-dashed">
+            <div class="h-48 w-[400px] overflow-y-auto bg-gray-50 border border-gray-300 rounded-lg">
+              <div class="mt-3 grid grid-cols-2 gap-6 mx-[10px]">
+                <app-edit-session *ngFor="let session of schedule.sessions" [session]="session" (delete)="delete(session.id!)"/>
+                <button type="button" (click)="addSessionFilm()" class="cursor-pointer flex items-center max-w-[11rem] h-[6rem] justify-center relative hover:scale-105 rounded-lg hover:border-red-800 border-2 border-dashed">
                   <h1 class="font-bold text-8xl underline-offset-0 text-gray-300 text-clip ">+</h1>
                 </button>
               </div>
