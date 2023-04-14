@@ -6,6 +6,8 @@ import {Genre} from "../../models/genre";
 import {FilmService} from "../../service/http/film.service";
 import {GenreService} from "../../service/http/genre.service";
 import {ActorService} from "../../service/http/actor.service";
+import {SearchService} from "../../service/search.service";
+import {Budget} from "../../models/budget";
 
 @Component({
   selector: 'app-films',
@@ -17,14 +19,24 @@ export class FilmsComponent {
   actors: Actor[] = []
   genres: Genre[] = []
   showModal = false;
+  search: string = ""
+
+  searchGenres: Genre[] = []
+
+  searchActors: Actor[] = []
+
+  budget: Budget = {leftBorder: 0, rightBorder: 0}
 
   constructor(
     private genreService: GenreService,
     private actorService: ActorService,
     private filmService: FilmService,
+    private searchService: SearchService,
     private readonly showModalService: ShowModalService
   ) {
     this.filmService.films.subscribe(films => this.films = films);
+    this.searchService.searchActors.subscribe(searchActors => this.searchActors = searchActors)
+    this.searchService.searchGenres.subscribe(searchGenres => this.searchGenres = searchGenres)
   }
 
   ngOnInit(): void {
@@ -42,6 +54,10 @@ export class FilmsComponent {
   }
 
   deleteFilm(id: string) {
-    this.filmService.deleteFilm(id).subscribe()
+    this.filmService.deleteFilm(id).subscribe();
+  }
+
+  searchFilm() {
+    this.filmService.searchFilms(this.search, this.budget, this.searchActors, this.searchGenres).subscribe();
   }
 }

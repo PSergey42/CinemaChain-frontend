@@ -22,9 +22,10 @@ export class AddCinemaComponent implements OnInit{
   }
 
   add(showModal: boolean): void {
-    if(this.cinema)
-    this.cinemaService.addCinema(this.cinema).subscribe();
-    this.setShowModal(showModal);
+    if(this.cinema && this.checkCinema()){
+      this.cinemaService.addCinema(this.cinema).subscribe();
+      this.setShowModal(showModal);
+    }
   }
 
   checkCinema(): boolean{

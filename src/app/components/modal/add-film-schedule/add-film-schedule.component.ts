@@ -27,13 +27,11 @@ export class AddFilmScheduleComponent implements OnInit{
     private route: ActivatedRoute,
     private readonly showModalService: ShowModalService
   ) {
-    this.filmService.films.subscribe(films => this.films = films)
+    this.filmService.films.subscribe(films => this.films = films.filter(f => !this.scheduleService.schedules.getValue().find(s => s.filmId == f.id)))
     this.scheduleService.schedule.subscribe(schedule => this.schedule = schedule)
-    route.params.subscribe(params => this.schedule.cinemaId = params['id'])
   }
 
   ngOnInit(): void {
-    this.filmService.getFilms().subscribe();
     this.showModalService.showModal$.subscribe((showModal) => this.showModal = showModal);
   }
 
@@ -83,6 +81,7 @@ export class AddFilmScheduleComponent implements OnInit{
   }
 
   add(showModal: boolean) {
+    this.schedule.cinemaId = this.route.snapshot.paramMap.get('id')!;
     this.scheduleService.addSchedule(this.schedule).subscribe();
     this.setShowModal(showModal);
   }

@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {BehaviorSubject, catchError, Observable, of, Subject, tap} from "rxjs";
 import {Film} from "../../models/film";
+import {Budget} from "../../models/budget";
+import {Actor} from "../../models/actor";
+import {Genre} from "../../models/genre";
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +34,39 @@ export class FilmService {
       );
   }
 
+  searchFilms(name: string, budget: Budget, searchActors: Actor[], searchGenres: Genre[]): Observable<Film[]>{
+    const url = `http://localhost:8080/api/filmsByParams`;
+    let sA = ""
+    let sG = ""
+    if(!name && budget.leftBorder <= 0 && budget.rightBorder <= 0 && searchActors.length == 0 && searchGenres.length == 0) {
+      return this.getFilms()
+    }
+    let params = new HttpParams()
+      .append('name', "")
+      .append('budgets', "")
+      .append('actors_id', "")
+      .append('genres_id', "")
+    if(name){
+      params = params.set('name', name)
+    }
+    if(budget.leftBorder > 0 && budget.rightBorder > 0){
+      params =  params.set('budgets', budget.leftBorder + "-" + budget.rightBorder)
+    }
+    if(searchActors.length != 0){
+      searchActors.map(a => sA = sA ? sA + "," + a.id : "" + a.id)
+      params =  params.set('actors_id', sA)
+      console.log(params)
+    }
+    if(searchGenres.length != 0){
+      searchGenres.map(g => sG = sG ? sG + "," + g.id : "" + g.id)
+      params =  params.set('genres_id', sG)
+    }
+    return this.http.get<Film[]>(url, {params})
+      .pipe(
+        tap(films => this.films.next(films)),
+        catchError(this.handleError<Film[]>('searchFilms', []))
+      );
+  }
   getFilmById(id: string): Observable<Film>{
     const url = `${this.url}/${id}`;
     return this.http.get<Film>(url)

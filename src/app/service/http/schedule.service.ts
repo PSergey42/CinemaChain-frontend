@@ -83,10 +83,11 @@ export class ScheduleService {
   }
 
   searchSchedule(cinema_id: string, search: string, date: string): Observable<Schedule[]> {
-    const url = `${this.url}/${cinema_id}`;
+    const url = `${this.url}/search/${cinema_id}`;
+    if(!search) return this.getSchedules(cinema_id, date);
     const params = new HttpParams()
       .append('date', date)
-      .append('search', search)
+      .append('nameSchedule', search)
     return this.http.get<Schedule[]>(url, {params})
       .pipe(
         tap(schedules => {

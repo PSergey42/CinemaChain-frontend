@@ -12,6 +12,8 @@ export class MainPageComponent {
 
   cinemas: Cinema[] = []
 
+  search: string = ""
+
   showModal = false;
 
   constructor(
@@ -34,4 +36,7 @@ export class MainPageComponent {
     this.showModalService.setShowModal(showModal);
   }
 
+  searchCinema() {
+    this.cinemaService.searchCinema(this.search).subscribe();
+  }
 }

@@ -5,6 +5,7 @@ import {ShowModalService} from "../../service/show-modal.service";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
 import {ScheduleService} from "../../service/http/schedule.service";
+import {FilmService} from "../../service/http/film.service";
 
 @Component({
   selector: 'app-schedule',
@@ -17,6 +18,7 @@ export class ScheduleComponent implements OnInit{
   showModal = false;
   search: string = ""
   constructor(
+    private filmService: FilmService,
     private scheduleService: ScheduleService,
     private route: ActivatedRoute,
     private readonly showModalService: ShowModalService
@@ -26,6 +28,7 @@ export class ScheduleComponent implements OnInit{
   }
 
   public setShowModal(showModal: boolean): void {
+    this.filmService.getFilms().subscribe();
     this.showModalService.setShowModal(showModal);
   }
 
@@ -42,7 +45,6 @@ export class ScheduleComponent implements OnInit{
   searchSchedule() {
     if(this.search){
       this.scheduleService.searchSchedule(this.cinemaId, this.search, this.today).subscribe();
-      this.search = "";
     }
     else {
       this.scheduleService.getSchedules(this.cinemaId, this.today).subscribe();

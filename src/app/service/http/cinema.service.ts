@@ -31,6 +31,20 @@ export class CinemaService {
       );
   }
 
+  searchCinema(name: string): Observable<Cinema[]> {
+    if(!name) {
+      return this.getCinema()
+    }
+    else {
+      const url = `${this.url}/search/${name}`;
+      return this.http.get<Cinema[]>(url)
+        .pipe(
+          tap(cinemas => this.cinema.next(cinemas)),
+          catchError(this.handleError<Cinema[]>('getCinemas', []))
+        );
+    }
+  }
+
   addCinema(cinema: Cinema): Observable<Cinema> {
     return this.http.post<Cinema>(this.url, cinema, this.httpOptions).pipe(
       tap((newCinema: Cinema) => this.setCinema(newCinema)),
