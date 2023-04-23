@@ -76,7 +76,7 @@ export class EditFilmScheduleComponent{
 
   delete(id: number){
     if(id == 0){
-      this.schedule.sessions.pop();
+      if(this.schedule.sessions.length > 1) this.schedule.sessions.pop();
     }
     else{
       this.listDelSession.push(this.schedule.sessions.find(s => s.id == id)!)
